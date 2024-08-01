@@ -1,5 +1,6 @@
 import Logo from "@/components/Logo";
 import RootProviders from "@/components/providers/RootProviders";
+import { Toaster } from "@/components/ui/sonner";
 import {
   ClerkProvider,
   SignedIn,
@@ -28,6 +29,7 @@ export default function RootLayout({
       <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
         <body className={inter.className}>
           {/* <Logo /> */}
+          <Toaster richColors position="bottom-right" />
           <RootProviders>
             <div className="relative flex h-screen w-full flex-col items-center justify-center">
               <div style={{ marginTop: "-60px" }}>{children}</div>
