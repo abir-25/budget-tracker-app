@@ -70,7 +70,7 @@ export function CurrencyComboBox() {
         return;
       }
 
-      toast.loading("Updating Currency...", {
+      toast.loading("Updating currency...", {
         id: "update-currency",
       });
 
