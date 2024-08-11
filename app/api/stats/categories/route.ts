@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 
 export async function GET(request: Request) {
   const user = await currentUser();
-
   if (!user) {
     redirect("/sign-in");
   }
@@ -25,7 +24,7 @@ export async function GET(request: Request) {
     });
   }
 
-  const stats = await getBalanceStats(
+  const stats = await getCategoriesStats(
     user.id,
     queryParams.data.from,
     queryParams.data.to
@@ -39,13 +38,13 @@ export async function GET(request: Request) {
   });
 }
 
-export type GetBalanceStatsResponseType = Awaited<
-  ReturnType<typeof getBalanceStats>
+export type GetCategoriesStatsResponseType = Awaited<
+  ReturnType<typeof getCategoriesStats>
 >;
 
-async function getBalanceStats(userId: string, from: Date, to: Date) {
-  const totals = await prisma.transaction.groupBy({
-    by: ["type"],
+async function getCategoriesStats(userId: string, from: Date, to: Date) {
+  const stats = await prisma.transaction.groupBy({
+    by: ["type", "category", "categoryIcon"],
     where: {
       userId,
       date: {
@@ -56,9 +55,12 @@ async function getBalanceStats(userId: string, from: Date, to: Date) {
     _sum: {
       amount: true,
     },
+    orderBy: {
+      _sum: {
+        amount: "desc",
+      },
+    },
   });
-  return {
-    expense: totals.find((t) => t.type === "expense")?._sum.amount || 0,
-    income: totals.find((t) => t.type === "income")?._sum.amount || 0,
-  };
+
+  return stats;
 }

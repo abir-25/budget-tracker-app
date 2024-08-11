@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { dateToUTCDate, GetFormatterForCurrency } from "@/lib/helper";
 import { UserSettings } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import { TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import React, { ReactNode, useCallback, useMemo } from "react";
 import CountUp from "react-countup";
 
@@ -45,6 +45,26 @@ function StatsCards({ from, to, userSettings }: Props) {
           }
         />
       </SkeletonWrapper>
+      <SkeletonWrapper isLoading={statsQuery.isFetching}>
+        <StatsCard
+          formatter={formatter}
+          value={expense}
+          title="Expense"
+          icon={
+            <TrendingDown className="h-12 w-12 items-center rounded-lg p-2 text-red-500 bg-red-400/10" />
+          }
+        />
+      </SkeletonWrapper>
+      <SkeletonWrapper isLoading={statsQuery.isFetching}>
+        <StatsCard
+          formatter={formatter}
+          value={balance}
+          title="Balance"
+          icon={
+            <Wallet className="h-12 w-12 items-center rounded-lg p-2 text-violet-500 bg-violet-400/10" />
+          }
+        />
+      </SkeletonWrapper>
     </div>
   );
 }
@@ -72,7 +92,7 @@ function StatsCard({
   return (
     <Card className="flex h-24 w-full items-center gap-2 p-4">
       {icon}
-      <div className="flex flex-col items-center gap-0">
+      <div className="flex flex-col items-start gap-0">
         <p className="text-muted-foreground">{title}</p>
         <CountUp
           preserveValue

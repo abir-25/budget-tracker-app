@@ -7,11 +7,11 @@ const SkeletonWrapper = ({
   isLoading,
   fullWidth = true,
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   isLoading: boolean;
-  fullWidth: boolean;
-}) => {
-  if (!isLoading) return children;
+  fullWidth?: boolean;
+}): JSX.Element | null => {
+  if (!isLoading) return <>{children}</>;
   return (
     <Skeleton className={cn(fullWidth && "w-full")}>
       <div className="opacity-0">{children}</div>
