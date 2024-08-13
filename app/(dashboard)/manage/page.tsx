@@ -1,6 +1,5 @@
 "use client";
 
-import { GetCategoriesStatsResponseType } from "@/app/api/stats/categories/route";
 import { CurrencyComboBox } from "@/components/CurrencyComboBox";
 import SkeletonWrapper from "@/components/SkeletonWrapper";
 import { Button } from "@/components/ui/button";
